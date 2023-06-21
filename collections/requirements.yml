@@ -1,3 +1,4 @@
 collections:
-# With just the collection name
--cisco.ios
+  # With just the collection name
+  - name: cisco.ios
+    type: galaxy

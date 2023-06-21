@@ -2,3 +2,7 @@ tasks:
   - name: Show run on remote devices
     ios_command:
       commands: show running
+      
+  - name: Show clock
+    ios_command:
+      commands: show clock

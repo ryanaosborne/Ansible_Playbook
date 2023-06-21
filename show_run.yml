@@ -1,3 +1,4 @@
-- name: Show run on remote devices
-  cisco.ios.ios_command:
-    commands: show running
+tasks:
+  - name: Show run on remote devices
+    cisco.ios.ios_command:
+      commands: show running

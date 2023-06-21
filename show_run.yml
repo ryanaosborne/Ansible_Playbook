@@ -1,5 +1,9 @@
 - hosts: all
   tasks:
+  - name: Term len 0
+    ios_command:
+      commands: term len 0
+      
   - name: Show run on remote devices
     ios_command:
       commands: show running
@@ -7,3 +11,7 @@
   - name: Show clock
     ios_command:
       commands: show clock
+
+  - name: Term len 39
+    ios_command:
+      commands: term len 39

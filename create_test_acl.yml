@@ -1,32 +1,37 @@
 - hosts: all
   tasks:
-  - name: Load new acl into device
-    cisco.ios.ios_config:
-      lines:
-        - 10 permit ip host 192.0.2.1 any log
-        - 20 permit ip host 192.0.2.2 any log
-        - 30 permit ip host 192.0.2.3 any log
-        - 40 permit ip host 192.0.2.4 any log
-        - 50 permit ip host 192.0.2.5 any log
-      parents: ip access-list extended test
-      before: no ip access-list extended test
-      match: exact
-      check_mode: true
-    register: config_result
+    - name: Load new acl into device
+      ios_command:
+        commands:
+          - command: "ip access-list extended test"
+            prompt: "[edit]"
+          - command: "no ip access-list extended test"
+            prompt: "[edit]"
+          - command: "10 permit ip host 192.0.2.1 any log"
+            prompt: "[edit]"
+          - command: "20 permit ip host 192.0.2.2 any log"
+            prompt: "[edit]"
+          - command: "30 permit ip host 192.0.2.3 any log"
+            prompt: "[edit]"
+          - command: "40 permit ip host 192.0.2.4 any log"
+            prompt: "[edit]"
+          - command: "50 permit ip host 192.0.2.5 any log"
+            prompt: "[edit]"
+      register: config_result
 
-  - name: Perform action if there are differences
-    debug:
-      msg: "Differences found, perform action"
-    when: config_result.changed or config_result.diff is defined
+    - name: Perform action if there are differences
+      debug:
+        msg: "Differences found, perform action"
+      when: config_result.stdout_lines | length > 0
 
-  - name: Perform the actual configuration change
-    cisco.ios.ios_config:
-      lines:
-        - 10 permit ip host 192.0.2.1 any log
-        - 20 permit ip host 192.0.2.2 any log
-        - 30 permit ip host 192.0.2.3 any log
-        - 40 permit ip host 192.0.2.4 any log
-        - 50 permit ip host 192.0.2.5 any log
-      parents: ip access-list extended test
-      before: no ip access-list extended test
-    when: config_result.changed or config_result.diff is defined
+    - name: Perform the actual configuration change
+      ios_config:
+        lines:
+          - "ip access-list extended test"
+          - "no ip access-list extended test"
+          - "10 permit ip host 192.0.2.1 any log"
+          - "20 permit ip host 192.0.2.2 any log"
+          - "30 permit ip host 192.0.2.3 any log"
+          - "40 permit ip host 192.0.2.4 any log"
+          - "50 permit ip host 192.0.2.5 any log"
+      when: config_result.stdout_lines | length > 0

@@ -1,6 +1,6 @@
 - hosts: all
   vars: 
-    ansible_ssh_common_args: '-o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc'
+    ansible_ssh_common_args: '-o PubkeyAcceptedKeyTypes=+ssh-rsa -o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc'
   tasks:
     - name: Load new acl into device
       ios_command:
@@ -28,7 +28,7 @@
 
     - name: Perform the actual configuration change
       vars: 
-        ansible_ssh_common_args: '-o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc'
+        ansible_ssh_common_args: '-o PubkeyAcceptedKeyTypes=+ssh-rsa -o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc'
       ios_config:
         lines:
           - "ip access-list extended test"

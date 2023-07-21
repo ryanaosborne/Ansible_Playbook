@@ -1,7 +1,7 @@
 - hosts: all
   vars:
-    ansible_ssh_common_args: "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-dss -o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc"
-    ANSIBLE_HOST_KEY_CHECKING: "False"
+    #ansible_ssh_common_args: "-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedKeyTypes=+ssh-dss -o KexAlgorithms=+diffie-hellman-group1-sha1 -c aes128-cbc"
+    #ANSIBLE_HOST_KEY_CHECKING: "False"
     #ansible_user: "ansible"
     #ansible_ssh_pass: "password"
   tasks:

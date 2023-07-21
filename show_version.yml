@@ -1,5 +1,6 @@
 - name: Cisco show version example
   hosts: cisco_L3_9k_devices
+  connection: paramiko
   gather_facts: false
 
   vars: # for execution environment

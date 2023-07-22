@@ -1,5 +1,5 @@
 - name: Cisco show version example
-  hosts: cisco_L3_devices
+  hosts: all
   connection: paramiko
   gather_facts: false
 

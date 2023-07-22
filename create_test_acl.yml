@@ -9,29 +9,29 @@
     #ansible_user: "ansible"
     #ansible_ssh_pass: "password"
   tasks:
-    - name: Load new acl into device
-      ios_command:
-        commands:
-          - command: "ip access-list extended test"
-            prompt: "[edit]"
-          - command: "no ip access-list extended test"
-            prompt: "[edit]"
-          - command: "10 permit ip host 192.0.2.1 any log"
-            prompt: "[edit]"
-          - command: "20 permit ip host 192.0.2.2 any log"
-            prompt: "[edit]"
-          - command: "30 permit ip host 192.0.2.3 any log"
-            prompt: "[edit]"
-          - command: "40 permit ip host 192.0.2.4 any log"
-            prompt: "[edit]"
-          - command: "50 permit ip host 192.0.2.5 any log"
-            prompt: "[edit]"
-      register: config_result
+    #- name: Load new acl into device
+     # ios_command:
+      #  commands:
+       #   - command: "ip access-list extended test"
+        #    prompt: "[edit]"
+         # - command: "no ip access-list extended test"
+          #  prompt: "[edit]"
+          #- command: "10 permit ip host 192.0.2.1 any log"
+          #  prompt: "[edit]"
+          #- command: "20 permit ip host 192.0.2.2 any log"
+          #  prompt: "[edit]"
+          #- command: "30 permit ip host 192.0.2.3 any log"
+          #  prompt: "[edit]"
+          #- command: "40 permit ip host 192.0.2.4 any log"
+          #  prompt: "[edit]"
+          #- command: "50 permit ip host 192.0.2.5 any log"
+          #  prompt: "[edit]"
+      #register: config_result
 
-    - name: Perform action if there are differences
-      debug:
-        msg: "Differences found, perform action"
-      when: config_result.stdout_lines | length > 0
+    #- name: Perform action if there are differences
+    #  debug:
+    #    msg: "Differences found, perform action"
+    #  when: config_result.stdout_lines | length > 0
 
     - name: Perform the actual configuration change
       #vars:

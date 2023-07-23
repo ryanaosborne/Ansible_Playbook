@@ -30,5 +30,4 @@
    - name: Save config via ios_config module
      ios_config:
        save_when: always
-       #timeout: 40
      when: not ansible_check_mode

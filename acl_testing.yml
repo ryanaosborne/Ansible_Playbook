@@ -1,0 +1,20 @@
+- hosts: all
+  vars:
+    ansible_network_cli_ssh_type: paramiko
+    ansible_connection: network_cli
+    ansible_network_os: ios
+    ansible_port: 22
+    gather_facts: no
+  tasks:
+    - name: Perform the actual configuration change
+      ios_config:
+        lines:
+          - permit ip host 192.0.2.1 any log
+          - permit ip host 192.0.2.2 any log
+          - permit ip host 192.0.2.3 any log
+          - permit ip host 192.0.2.4 any log
+          - permit ip host 192.0.2.5 any log
+        parents: ip access-list extended test
+        before: no ip access-list extended test
+        match: strict
+        replace: block

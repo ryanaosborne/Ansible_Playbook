@@ -18,7 +18,7 @@
         before: no ip access-list extended test
         match: exact
         replace: block
-        notify: "Save config"
+      notify: "Save config"
   
   handlers:
    - name: Save config

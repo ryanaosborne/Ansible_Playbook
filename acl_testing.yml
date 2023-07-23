@@ -9,11 +9,11 @@
     - name: Perform the actual configuration change
       ios_config:
         lines:
-          - permit ip host 192.0.2.1 any log
-          - permit ip host 192.0.2.2 any log
-          - permit ip host 192.0.2.3 any log
-          - permit ip host 192.0.2.4 any log
-          - permit ip host 192.0.2.5 any log
+          - "permit ip host 192.0.2.1 any log"
+          - "permit ip host 192.0.2.2 any log"
+          - "permit ip host 192.0.2.3 any log"
+          - "permit ip host 192.0.2.4 any log"
+          - "permit ip host 192.0.2.5 any log"
         parents: ip access-list extended test
         before: no ip access-list extended test
         match: strict

@@ -20,7 +20,4 @@
         before: no ip access-list extended test
         match: exact
         replace: block
-
-    - name: Save running config if changes were made
-      ios_config:
         save_when: changed

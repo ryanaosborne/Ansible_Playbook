@@ -6,7 +6,7 @@
     ansible_network_os: ios
     ansible_port: 22
   tasks:
-    - name: Audit 'test' ACL
+    - name: Audit test ACL
       ios_config:
         lines:
           - "permit ip host 10.0.0.1 any log"
@@ -22,4 +22,4 @@
 
     - name: Save running config because changes were made
       ios_config:
-      save_when: modified |
+        save_when: modified |

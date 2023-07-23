@@ -22,4 +22,4 @@
 
     - name: Save running config because changes were made
       ios_config:
-        save_when: modified
+        save_when: changed

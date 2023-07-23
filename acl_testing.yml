@@ -19,7 +19,3 @@
         match: exact
         replace: block
         save_when: changed
-        
-    # - name: Save running config if changed
-    #   ios_config:
-    #     save_when: changed

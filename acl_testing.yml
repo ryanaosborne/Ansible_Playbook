@@ -9,6 +9,7 @@
     - name: Perform the actual configuration change
       ios_config:
         lines:
+          - "permit ip host 10.0.0.1 any log"
           - "permit ip host 192.0.2.1 any log"
           - "permit ip host 192.0.2.2 any log"
           - "permit ip host 192.0.2.3 any log"

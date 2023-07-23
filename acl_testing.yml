@@ -9,7 +9,6 @@
     - name: Audit test ACL
       ios_config:
         lines:
-          - "permit ip host 10.0.0.1 any log"
           - "permit ip host 192.0.2.1 any log"
           - "permit ip host 192.0.2.2 any log"
           - "permit ip host 192.0.2.3 any log"
@@ -20,6 +19,6 @@
         match: exact
         replace: block
         
-    #- name: Save running config if changed
-     # ios_config:
-      #  save_when: changed
+    - name: Save running config if changed
+      ios_config:
+        save_when: changed

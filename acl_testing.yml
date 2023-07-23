@@ -21,6 +21,6 @@
         match: exact
         replace: block
         
-      - name: Save running config if changed
-        ios_config:
-          save_when: changed
+    - name: Save running config if changed
+      ios_config:
+        save_when: changed

@@ -9,17 +9,18 @@
     - name: Audit test ACL
       ios_config:
         lines:
-          - "permit ip host 10.0.0.1 any log"
-          - "permit ip host 192.0.2.1 any log"
-          - "permit ip host 192.0.2.2 any log"
-          - "permit ip host 192.0.2.3 any log"
-          - "permit ip host 192.0.2.4 any log"
-          - "permit ip host 192.0.2.5 any log"
-        parents: "ip access-list extended test"
-        before: "no ip access-list extended test"
+          - permit ip host 10.0.0.1 any log
+          - permit ip host 192.0.2.1 any log
+          - permit ip host 192.0.2.2 any log
+          - permit ip host 192.0.2.3 any log
+          - permit ip host 192.0.2.4 any log
+          - permit ip host 192.0.2.5 any log
+          - deny ip any any
+        parents: ip access-list extended test
+        before: no ip access-list extended test
         match: exact
         replace: block
 
-    - name: Save running config because changes were made
+    - name: Save running config if changes were made
       ios_config:
         save_when: changed

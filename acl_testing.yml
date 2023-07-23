@@ -18,11 +18,17 @@
         before: no ip access-list extended test
         match: exact
         replace: block
-      notify: "Save config"
+      notify: "Save config via ios_config module"
   
   handlers:
    - name: Save config
      ios_command:
        commands: "write mem"
+       #timeout: 40
+     when: not ansible_check_mode
+     
+   - name: Save config via ios_config module
+     ios_config:
+       save_when: always
        #timeout: 40
      when: not ansible_check_mode

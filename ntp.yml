@@ -12,7 +12,15 @@
       - ntp server 10.0.0.1
       
   tasks:
+  - name: Gather Facts (ios)
+    cisco.ios.ios_facts: 
+    when: ansible_network_os == 'ios'
   
+  - name: Device model
+    debug:
+      msg: "Model {{ ansible_net_model }}"
+
+
   - name: get the current ntp server configs
     ios_command:
       commands:

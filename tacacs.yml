@@ -9,8 +9,8 @@
     - name: Audit TACACs Settings
       ios_config:
         lines:
-          - tacacs-server host 10.0.0.4
-          - tacacs-server host 10.0.0.5
+          - tacacs-server host 10.0.0.2
+          - tacacs-server host 10.0.0.3
         # parents: ip access-list extended test
         # before: 
         #   - no tacacs-server host 10.0.0.4

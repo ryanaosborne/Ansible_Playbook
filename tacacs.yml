@@ -15,16 +15,10 @@
         # before: 
         #   - no tacacs-server host 10.0.0.4
         match: line
-        replace: block
+        replace: line
       notify: "Save config via ios_config module"
   
   handlers:
-   - name: Save config
-     ios_command:
-       commands: "write mem"
-       #timeout: 40
-     when: not ansible_check_mode
-     
    - name: Save config via ios_config module
      ios_config:
        save_when: always

@@ -2,6 +2,11 @@
   gather_facts: no
 
   vars:
+    ansible_connection: network_cli
+    gather_facts: no
+    ansible_network_cli_ssh_type: paramiko
+    ansible_network_os: ios
+    ansible_port: 22
     ntp_servers:
       - ntp server 216.239.35.0
       - ntp server 216.239.35.4

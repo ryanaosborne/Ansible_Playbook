@@ -9,7 +9,8 @@
     ansible_port: 22
 
     ntp_servers:
-      - ntp server 10.0.0.1
+      - ntp server 10.0.0.2
+      - ntp server 10.0.0.3
       
   tasks:
   - name: Gather Facts (ios)

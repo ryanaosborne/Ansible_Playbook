@@ -26,12 +26,12 @@
 
       - debug: var=get_config.stdout_lines
 
-      - name: set ntp server commands
+      - name: set ADFS object-group
         ios_config:
           lines:
               - host 10.0.0.1
           parents: object-group network ADFS
-          before: no {{ item }}
+          before: no object-group network ADFS
           match: exact
         replace: block
         register: set_og

@@ -30,9 +30,9 @@
         ios_config:
           lines:
               - host 10.0.0.1
-        parents: object-group network ADFS
-        before: no {{ item }}
-        match: exact
+          parents: object-group network ADFS
+          before: no {{ item }}
+          match: exact
         replace: block
         register: set_og
 

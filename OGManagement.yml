@@ -33,7 +33,7 @@
           parents: object-group network ADFS
           before: no object-group network ADFS
           match: exact
-        replace: block
+          replace: block
         register: set_og
 
       - name: remove object-group server commands

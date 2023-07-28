@@ -30,7 +30,7 @@
   - debug: var=get_config.stdout_lines
 
   - name: set ntp server commands
-    when: ansible_net_model | regex_search('\D2\d{3}\D')
+    when: ansible_net_model | regex_search('\D3\d{3}\D')
     with_items: "{{ ntp_servers }}"
     ios_config:
       lines:

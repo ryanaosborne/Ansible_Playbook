@@ -9,7 +9,7 @@
     ansible_port: 22
 
     ntp_servers:
-      - ntp server 10.0.0.1
+      - ntp server 10.0.0.2
       
   tasks:
   - name: Gather Facts (ios)
@@ -31,7 +31,6 @@
       - debug: var=get_config.stdout_lines
 
       - name: set ntp server commands
-        when: "{{ ansible_net_model | regex_search('-' , ignorecase=True) }}"
         with_items: "{{ ntp_servers }}"
         ios_config:
           lines:

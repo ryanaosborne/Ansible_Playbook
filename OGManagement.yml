@@ -43,6 +43,5 @@
         ios_config:
           lines:
             - "no {{ item }}"
-
-
-    when: ansible_net_model | regex_search('9\d{3}')
+            
+    when: ansible_net_model | regex_search('2\d{3}')

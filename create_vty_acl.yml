@@ -25,11 +25,11 @@
   hosts: localhost
   tasks:
     - name: Update the package index
-      become: yes
+      # become: yes
       command: apk update
 
     - name: Install the package
-      become: yes
+      # become: yes
       command: apk add py3-pip
 
     # - name: Remove ACL 25 from VTY lines 0 15

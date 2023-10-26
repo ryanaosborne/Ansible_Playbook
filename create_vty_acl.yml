@@ -24,13 +24,11 @@
 
   hosts: localhost
   tasks:
-    - name: Update the package index
-      # become: yes
-      command: apk update
+    
 
     - name: Install the package
       # become: yes
-      command: apk add py3-pip
+      command: pip install netaddr
 
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:

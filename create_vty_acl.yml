@@ -1,34 +1,35 @@
 - name: Add ACL to Switch
-  # hosts: SW1
-  # vars:
-  #   ansible_connection: ansible.netcommon.network_cli
-  #   ansible_network_os: cisco.ios.ios
-  #   gather_facts: no
-  #   ansible_network_cli_ssh_type: paramiko
-  #   ansible_port: 22
-  #   ansible_command_timeout: 60
+  hosts: SW1
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    gather_facts: no
+    ansible_network_cli_ssh_type: paramiko
+    ansible_port: 22
+    ansible_command_timeout: 60
 
-  #   ip_networks:
-  #     - 192.168.1.0/24
-  #     - 10.0.0.0/16
+    ip_networks:
+      - 192.168.1.0/24
+      - 10.0.0.0/16
       
-  # tasks:
-  #   - name: Convert CIDR to Wildcard
-  #     set_fact:
-  #       wildcard_masks: "{{ wildcard_masks | default([]) + [item | regex_replace('.*\\/', '') | int | to_ipaddress | ipaddr('ip_mask') | regex_replace('255', '0') | regex_replace('[^0]', '255')] }}"
-  #     loop: "{{ ip_networks }}"
-
-  #   - name: Display Wildcard Masks
-  #     debug:
-  #       var: wildcard_masks
-
-  hosts: localhost
   tasks:
+    - name: Calculate wildcards from CIDR notations
+      set_fact:
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ipaddr('netmask')] }}"
+      loop: "{{ ip_networks }}"
+
+
+    - name: Display Wildcard Masks
+      debug:
+        var: wildcard_masks
+
+  # hosts: localhost
+  # tasks:
     
 
-    - name: Install the package
-      # become: yes
-      command: pip install netaddr
+  #   - name: Install the package
+  #     # become: yes
+  #     command: pip install netaddr
 
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:

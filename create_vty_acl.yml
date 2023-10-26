@@ -24,6 +24,8 @@
           - permit host 192.0.2.3
           - permit host 192.0.2.4
           - permit host 192.0.2.5
+          - permit host 10.0.0.20
+          - permit host 10.0.0.16
         parents: ip access-list standard 25
         before: no ip access-list standard 25
         match: exact

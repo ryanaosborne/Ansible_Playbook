@@ -15,21 +15,12 @@
   tasks:
     - name: Calculate wildcards from CIDR notations
       set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ipaddr('netmask')] }}"
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ansible.utils.ipaddr('netmask')] }}"
       loop: "{{ ip_networks }}"
-
 
     - name: Display Wildcard Masks
       debug:
         var: wildcard_masks
-
-  # hosts: localhost
-  # tasks:
-    
-
-  #   - name: Install the package
-  #     # become: yes
-  #     command: pip install netaddr
 
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:

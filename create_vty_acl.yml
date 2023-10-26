@@ -37,6 +37,7 @@
         lines:
           - permit ip host 10.0.0.16 any
           - permit ip host 10.0.0.20 any
+          - permit ip host 10.0.0.1 any
           - deny   ip any any
         parents: ip access-list extended SSH_access
         before: no ip access-list extended SSH_access

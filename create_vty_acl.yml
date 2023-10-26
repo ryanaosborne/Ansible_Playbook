@@ -1,6 +1,8 @@
 - name: Add ACL to Switch
   hosts: SW1
   vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
     gather_facts: no
     ansible_network_cli_ssh_type: paramiko
     ansible_port: 22
@@ -19,7 +21,7 @@
     - name: Display wildcard masks
       debug:
         var: wildcard_masks
-        
+
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:
     #     parents:

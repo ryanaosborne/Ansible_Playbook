@@ -1,97 +1,52 @@
  name: Add ACL to Switch
-
   hosts: home_switch
-
   vars:
-
     ansible_connection: ansible.netcommon.network_cli
-
     ansible_network_os: cisco.ios.ios
-
     #ansible_ssh_common_args: "-oKexAlgorithms=+diffie-hellman-group14-sha1 -oCiphers=+aes128-cbc"
-
     #ANSIBLE_HOST_KEY_CHECKING: "False"
-
     #ansible_become: yes
-
     #ansible_become_method: enable
-
+  
   tasks:
-
-    - name: Remove ACL 25 from VTY lines 0 15
-
-      cisco.ios.ios_config:
-
-        parents:
-
-          - line vty 0 15
-
-        lines:
-
-          - no access-class 25 in
-
- 
+    # - name: Remove ACL 25 from VTY lines 0 15
+    #   cisco.ios.ios_config:
+    #     parents:
+    #       - line vty 0 15
+    #     lines:
+    #       - no access-class 25 in
 
     - name: Audit ACL 25 - Edit if differences detected
-
       cisco.ios.ios_config:
-
         lines:
-
-          - permit ip host 192.0.2.1 any log
-
-          - permit ip host 192.0.2.2 any log
-
-          - permit ip host 192.0.2.3 any log
-
-          - permit ip host 192.0.2.4 any log
-
-          - permit ip host 192.0.2.5 any log
-
+          - permit host 192.0.2.1
+          - permit host 192.0.2.2
+          - permit host 192.0.2.3
+          - permit host 192.0.2.4
+          - permit host 192.0.2.5
         parents: ip access-list standard 25
-
         before: no ip access-list standard 25
-
         match: exact
-
         replace: block
-
       notify: "Save config via ios_config module"
 
-   
-
-    - name: Add ACL 25 to VTY lines 0 15
-
-      cisco.ios.ios_config:
-
-        parents:
-
-          - line vty 0 15
-
-        lines:
-
-          - access-class 25 in
+    # - name: Add ACL 25 to VTY lines 0 15
+    #   cisco.ios.ios_config:
+    #     parents:
+    #       - line vty 0 15
+    #     lines:
+    #       - access-class 25 in
 
  
 
   handlers:
-
    - name: Save config
-
      ios_command:
-
        commands: "write mem"
-
        #timeout: 40
-
      when: not ansible_check_mode
-
      
-
    - name: Save config via ios_config module
-
      ios_config:
-
        save_when: always
-
      when: not ansible_check_mode

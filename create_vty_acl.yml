@@ -13,9 +13,18 @@
       - 10.0.0.0/16
       
   tasks:
-    - name: Calculate wildcards from CIDR notations
+    - name: Calculate netmask from CIDR notations
       set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ansible.utils.ipaddr('netmask')] }}"
+        net_masks: "{{ net_masks | default([]) + [item | ansible.utils.ipaddr('netmask')] }}"
+      loop: "{{ ip_networks }}"
+
+    - name: Display Netmask Masks
+      debug:
+        var: net_masks
+    
+    - name: Convert CIDR to Wildcard
+      set_fact:
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | regex_replace('.*\\/', '') | int | to_ipaddress | ipaddr('ip_mask') | regex_replace('255', '0') | regex_replace('(\d+)', '255-\\1') | regex_replace('-', ' ') ] }}"
       loop: "{{ ip_networks }}"
 
     - name: Display Wildcard Masks

@@ -31,6 +31,22 @@
         match: exact
         replace: block
       notify: "Save config via ios_config module"
+    
+    - name: Audit ACL 25 - Edit if differences detected
+      cisco.ios.ios_config:
+        lines:
+          - access-list 25 permit 10.0.0.16
+          - access-list 25 permit 10.0.0.20
+          - access-list 25 permit 192.0.2.2
+          - access-list 25 permit 192.0.2.3
+          - access-list 25 permit 192.0.2.1
+          - access-list 25 permit 192.0.2.4
+          - access-list 25 permit 192.0.2.5
+        #parents: ip access-list standard 25
+        before: no ip access-list standard 25
+        match: exact
+        replace: block
+      notify: "Save config via ios_config module"
 
     # - name: Add ACL 25 to VTY lines 0 15
     #   cisco.ios.ios_config:

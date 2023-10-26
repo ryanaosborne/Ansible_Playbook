@@ -35,15 +35,11 @@
     - name: Audit ACL 25 - Edit if differences detected
       cisco.ios.ios_config:
         lines:
-          - access-list 25 permit 10.0.0.16
-          - access-list 25 permit 10.0.0.20
-          - access-list 25 permit 192.0.2.2
-          - access-list 25 permit 192.0.2.3
-          - access-list 25 permit 192.0.2.1
-          - access-list 25 permit 192.0.2.4
-          - access-list 25 permit 192.0.2.5
-        #parents: ip access-list standard 25
-        before: no ip access-list standard 25
+          - permit ip host 10.0.0.16 any
+          - permit ip host 10.0.0.20 any
+          - deny   ip any any
+        parents: ip access-list extended SSH_access
+        before: no ip access-list extended SSH_access
         match: exact
         replace: block
       notify: "Save config via ios_config module"

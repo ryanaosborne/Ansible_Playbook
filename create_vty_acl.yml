@@ -11,14 +11,14 @@
     ip_networks:
       - 192.168.1.0/24
       - 10.0.0.0/16
-  
+      
   tasks:
-    - name: Calculate wildcards from CIDR notations
+    - name: Convert CIDR to Wildcard
       set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ipaddr('netmask')] }}"
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | regex_replace('.*\\/', '') | int | to_ipaddress | ipaddr('ip_mask') | regex_replace('255', '0') | regex_replace('[^0]', '255')] }}"
       loop: "{{ ip_networks }}"
 
-    - name: Display wildcard masks
+    - name: Display Wildcard Masks
       debug:
         var: wildcard_masks
 

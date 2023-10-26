@@ -1,14 +1,25 @@
 - name: Add ACL to Switch
   hosts: SW1
   vars:
-    ansible_connection: ansible.netcommon.network_cli
-    ansible_network_os: cisco.ios.ios
-    #ansible_ssh_common_args: "-oKexAlgorithms=+diffie-hellman-group14-sha1 -oCiphers=+aes128-cbc"
-    #ANSIBLE_HOST_KEY_CHECKING: "False"
-    #ansible_become: yes
-    #ansible_become_method: enable
+    gather_facts: no
+    ansible_network_cli_ssh_type: paramiko
+    ansible_port: 22
+    ansible_command_timeout: 60
+
+    ip_networks:
+      - 192.168.1.0/24
+      - 10.0.0.0/16
   
   tasks:
+    - name: Calculate wildcards from CIDR notations
+      set_fact:
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ipaddr('netmask')] }}"
+      loop: "{{ ip_networks }}"
+
+    - name: Display wildcard masks
+      debug:
+        var: wildcard_masks
+        
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:
     #     parents:
@@ -32,18 +43,18 @@
     #     replace: block
     #   notify: "Save config via ios_config module"
     
-    - name: Audit ACL 25 - Edit if differences detected
-      cisco.ios.ios_config:
-        lines:
-          - permit ip host 10.0.0.16 any
-          - permit ip host 10.0.0.20 any
-          - permit ip host 10.0.0.1 any
-          - deny   ip any any
-        parents: ip access-list extended SSH_access
-        before: no ip access-list extended SSH_access
-        match: exact
-        replace: block
-      notify: "Save config via ios_config module"
+    # - name: Audit SSH Access ACL - Edit if differences detected
+    #   cisco.ios.ios_config:
+    #     lines:
+    #       - permit ip host 10.0.0.16 any
+    #       - permit ip host 10.0.0.20 any
+    #       - permit ip host 10.0.0.1 any
+    #       - deny   ip any any
+    #     parents: ip access-list standard SSH_access
+    #     before: no ip access-list standard SSH_access
+    #     match: exact
+    #     replace: block
+    #   notify: "Save config via ios_config module"
 
     # - name: Add ACL 25 to VTY lines 0 15
     #   cisco.ios.ios_config:

@@ -11,7 +11,8 @@
     ip_networks:
       - 192.168.1.0/24
       - 10.0.0.0/16
-      - 10.0.0.0/18
+      - 192.168.1.1/18
+      - 10.184.192.253/26
       
   tasks:
     - name: Calculate network and netmask
@@ -25,7 +26,7 @@
       debug:
         var: net_masks
     
-    - name: Calculate netmask from CIDR notations
+    - name: Calculate network and wildcard
       set_fact:
         wildcard_masks: "{{ wildcard_masks | default([]) + [(item | ansible.utils.ipaddr('network')) + ' ' + (item | ansible.utils.ipaddr('hostmask'))] }}"
       loop: "{{ ip_networks }}"

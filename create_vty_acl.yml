@@ -25,7 +25,7 @@
     - name: Subtract 255 from each octet of the netmask
       set_fact:
         wildcard_masks: "{{ wildcard_masks | default([]) + [item | netmask_subtract] }}"
-      loop: "{{ ip_networks }}"
+      loop: "{{ net_masks }}"
 
     - name: Display Wildcard Masks
       debug:

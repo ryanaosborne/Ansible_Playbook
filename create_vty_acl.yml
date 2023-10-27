@@ -51,7 +51,7 @@
           - "permit {{ item }}"
         parents: ip access-list standard SSH_access
         before: no ip access-list standard SSH_access
-        after: deny   ip any any
+        
         match: exact
         replace: block
       notify: "Save config via ios_config module"

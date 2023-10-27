@@ -19,4 +19,5 @@ class FilterModule(object):
     def filters(self):
         return {
             'netmask_subtract': netmask_subtract,
+            'cidr_to_wildcard': cidr_to_wildcard
         }

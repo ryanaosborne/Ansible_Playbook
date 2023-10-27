@@ -15,16 +15,16 @@
       - 10.184.192.253/26
       
   tasks:
-    - name: Calculate network and netmask
-      set_fact:
-        net_masks: "{{ net_masks | default([]) + [(item | ansible.utils.ipaddr('network')) + ' ' + (item | ansible.utils.ipaddr('netmask'))] }}"
-      loop: "{{ ip_networks }}"
-      loop_control:
-        label: "{{ item }}"
+    # - name: Calculate network and netmask
+    #   set_fact:
+    #     net_masks: "{{ net_masks | default([]) + [(item | ansible.utils.ipaddr('network')) + ' ' + (item | ansible.utils.ipaddr('netmask'))] }}"
+    #   loop: "{{ ip_networks }}"
+    #   loop_control:
+    #     label: "{{ item }}"
 
-    - name: Display Netmask Masks
-      debug:
-        var: net_masks
+    # - name: Display Netmask Masks
+    #   debug:
+    #     var: net_masks
     
     - name: Calculate network and wildcard
       set_fact:
@@ -60,18 +60,17 @@
     #     replace: block
     #   notify: "Save config via ios_config module"
     
-    # - name: Audit SSH Access ACL - Edit if differences detected
-    #   cisco.ios.ios_config:
-    #     lines:
-    #       - permit ip host 10.0.0.16 any
-    #       - permit ip host 10.0.0.20 any
-    #       - permit ip host 10.0.0.1 any
-    #       - deny   ip any any
-    #     parents: ip access-list standard SSH_access
-    #     before: no ip access-list standard SSH_access
-    #     match: exact
-    #     replace: block
-    #   notify: "Save config via ios_config module"
+    - name: Audit SSH Access ACL - Edit if differences detected
+      cisco.ios.ios_config:
+      with_items: "{{ wildcard_masks }}"
+        lines:
+          - "permit {{ item }}""
+        parents: ip access-list standard SSH_access
+        before: no ip access-list standard SSH_access
+        after: deny   ip any any
+        match: exact
+        replace: block
+      notify: "Save config via ios_config module"
 
     # - name: Add ACL 25 to VTY lines 0 15
     #   cisco.ios.ios_config:

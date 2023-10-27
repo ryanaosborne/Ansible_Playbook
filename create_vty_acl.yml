@@ -14,10 +14,12 @@
       - 10.0.0.0/18
       
   tasks:
-    - name: Calculate netmask from CIDR notations
+   - name: Calculate network and netmask
       set_fact:
-        net_masks: "{{ net_masks | default([]) + [item | ansible.utils.ipaddr('netmask')] }}"
+        net_masks: "{{ net_masks | default([]) + [item + ' ' + (item | ipaddr('netmask'))] }}"
       loop: "{{ ip_networks }}"
+      loop_control:
+        label: "{{ item }}"
 
     - name: Display Netmask Masks
       debug:

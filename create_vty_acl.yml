@@ -43,28 +43,12 @@
     #       - line vty 0 15
     #     lines:
     #       - no access-class 25 in
-
-    # - name: Audit ACL 25 - Edit if differences detected
-    #   cisco.ios.ios_config:
-    #     lines:
-    #       - permit host 192.0.2.1
-    #       - permit host 192.0.2.2
-    #       - permit host 192.0.2.3
-    #       - permit host 192.0.2.4
-    #       - permit host 192.0.2.5
-    #       - permit host 10.0.0.20
-    #       - permit host 10.0.0.16
-    #     parents: ip access-list standard 25
-    #     before: no ip access-list standard 25
-    #     match: exact
-    #     replace: block
-    #   notify: "Save config via ios_config module"
     
     - name: Audit SSH Access ACL - Edit if differences detected
       cisco.ios.ios_config:
       with_items: "{{ wildcard_masks }}"
         lines:
-          - "permit {{ item }}""
+          - "permit {{ item }}"
         parents: ip access-list standard SSH_access
         before: no ip access-list standard SSH_access
         after: deny   ip any any

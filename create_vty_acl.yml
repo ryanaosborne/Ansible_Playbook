@@ -26,7 +26,6 @@
         var: net_masks
     
     - name: Calculate netmask from CIDR notations
-      gather_facts: no
       set_fact:
         wildcard_masks: "{{ wildcard_masks | default([]) + [item | ansible.utils.ipaddr('hostmask')] }}"
       loop: "{{ ip_networks }}"

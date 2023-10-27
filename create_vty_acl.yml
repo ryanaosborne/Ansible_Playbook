@@ -26,16 +26,18 @@
     #   debug:
     #     var: net_masks
     
-    - name: Calculate network and wildcard
-      set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [(item | ansible.utils.ipaddr('network')) + ' ' + (item | ansible.utils.ipaddr('hostmask'))] }}"
-      loop: "{{ ip_networks }}"
-      loop_control:
-        label: "{{ item }}"
+    # - name: Calculate network and wildcard
+    #   set_fact:
+    #     wildcard_masks: "{{ wildcard_masks | default([]) + [(item | ansible.utils.ipaddr('network')) + ' ' + (item | ansible.utils.ipaddr('hostmask'))] }}"
+    #   loop: "{{ ip_networks }}"
+    #   loop_control:
+    #     label: "{{ item }}"
 
-    - name: Display Wildcard Masks
-      debug:
-        var: wildcard_masks
+    # - name: Display Wildcard Masks
+    #   debug:
+    #     var: wildcard_masks
+    
+
 
     # - name: Remove ACL 25 from VTY lines 0 15
     #   cisco.ios.ios_config:
@@ -44,11 +46,10 @@
     #     lines:
     #       - no access-class 25 in
     
-    - name: Audit SSH Access ACL - Edit if differences detected
-      with_items: "{{ wildcard_masks }}"
+    - name: Audit SSH Access ACL - Edit if differences dete
       cisco.ios.ios_config:
         lines:
-          - "permit {{ item }}"
+          - 
         parents: ip access-list standard SSH_access
         before: no ip access-list standard SSH_access
         
@@ -56,12 +57,12 @@
         replace: block
       notify: "Save config via ios_config module"
 
-    # - name: Add ACL 25 to VTY lines 0 15
+    # - name: Add ACL to VTY lines 0 15
     #   cisco.ios.ios_config:
     #     parents:
     #       - line vty 0 15
     #     lines:
-    #       - access-class 25 in
+    #       - access-class SSH_access in
 
  
 

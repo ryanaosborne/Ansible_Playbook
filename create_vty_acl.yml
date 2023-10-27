@@ -23,10 +23,15 @@
       debug:
         var: net_masks
     
-    - name: Subtract 255 from each octet of the netmask
+    - name: Calculate netmask from CIDR notations
       set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [item | cidr_to_wildcard] }}"
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | ansible.utils.ipaddr('hostmask')] }}"
       loop: "{{ ip_networks }}"
+
+    # - name: Subtract 255 from each octet of the netmask
+    #   set_fact:
+    #     wildcard_masks: "{{ wildcard_masks | default([]) + [item | cidr_to_wildcard] }}"
+    #   loop: "{{ ip_networks }}"
 
     - name: Display Wildcard Masks
       debug:

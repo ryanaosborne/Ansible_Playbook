@@ -16,7 +16,7 @@
   tasks:
    - name: Calculate network and netmask
       set_fact:
-        net_masks: "{{ net_masks | default([]) + [item + (item | ipaddr('netmask'))] }}"
+        net_masks: "{{ net_masks | default([]) + [item + ' ' + (item | ansible.utils.ipaddr('netmask'))] }}"
       loop: "{{ ip_networks }}"
       loop_control:
         label: "{{ item }}"

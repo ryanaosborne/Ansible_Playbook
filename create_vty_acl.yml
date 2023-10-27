@@ -45,8 +45,8 @@
     #       - no access-class 25 in
     
     - name: Audit SSH Access ACL - Edit if differences detected
-      cisco.ios.ios_config:
       with_items: "{{ wildcard_masks }}"
+      cisco.ios.ios_config:
         lines:
           - "permit {{ item }}"
         parents: ip access-list standard SSH_access

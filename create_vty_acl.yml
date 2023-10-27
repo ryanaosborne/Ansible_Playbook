@@ -25,7 +25,7 @@
     
     - name: Subtract 255 from each octet of the netmask
       set_fact:
-        wildcard_masks: "{{ wildcard_masks | default([]) + [[item | ansible.utils.ipaddr('netmask')] | netmask_subtract] }}"
+        wildcard_masks: "{{ wildcard_masks | default([]) + [item | cidr_to_wildcard] }}"
       loop: "{{ ip_networks }}"
 
     - name: Display Wildcard Masks
